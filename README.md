@@ -265,26 +265,8 @@ After the conclusion of Free Agency, the Waiver Wire will open and run throughou
 
 For both Free Agency and Waiver Wire, if an honest mistake was made with the bid, the owner must make it known immediately so the 2nd highest bidder may submit their contract. If a week passes with no correction and no contract submission to the commissioner, it will be assumed that the full bid is meant as a 1 year, salary only contract; the owner cannot contest this.
 
-## Commisioner Clause
+## Commisioner Clause (TODO)
 The commisioner reserves the absolute authority to 
-
-## Startup Draft Options
-1. Auction draft
-2. Snake draft of actual NFL assets (current contract values and 2025 draft selections).
-
-Draft rookie draft selections for the current year and existing contracts, scaled so the greatest AAV for any position = 20% of the salary cap. Undrafted contracts become UFA for the following Free Agency period. Expired contracts can also be drafted and are tagged UFA or RFA appropriately. Drafted UFAs can be (a) franchise tagged or (b) dropped by the franchise tag deadline. Drafted RFAs can be (a) franchise tagged, (b) issued an RFA tender by the tender deadline, or (c) dropped by the RFA tender deadline.
-
-For simplicity, existing contracts consider average salary over the full term of the contract, not going forward. This has some side effects, notably (a) soon to expire contracts are often cheaper, and (b) long contracts are often cheaper like Mahomes'. Specific terms of the contract will be 100% allocation to salary bucket with a 5% backload starting in the original contract year. For example, Mahomes' contract of $450 million over 10 years would have an initial year cost of $35.7 million and a final year cost of $55.5 million (not adusted for top AAV being 20% of cap).
-
-At any point in the startup draft, a team can pass on making a selection. After doing so, they do not participate in the rest of the draft. It is recommended not to pass prior to all rookie draft selections have been claimed.
-
-
-
-18 roster spots
-3 QBs - $93 million
-7 WRs - 
-5 RBs - 
-3 TEs - 
 
 ## Notable Differences From NFL
 Some differences between this league and the NFL should be plainly obvious. For example, players cannot negotiate pretend contracts with fantasy football owners, and therefore we have a system to automatically negotiate contract extensions on their behalf (Adjusted AAV and Contract Extension Requirements). Other differences are less obvious, and this section seeks to justify some of the decisions made.
@@ -334,52 +316,29 @@ Waiver Wire / Free Agency (read - write)
 
 CBA (readonly)
 
-## Scribble Sheet
-Several options that could make it make sense.
- - By League
-   - Pros: More realistic, easier to implement
-   - Cons: More volatile
-   - Consider average annual salaries for each position.
-   - Consider salary curve by age in the league
-     - Factor in number of players at each age currently in the league
-     - Use a best fit curve
-       - Age
-       - Fantasy Points
-       - Salary
-       - By Position
- - Average of all leagues
-   - Pros: Less volatile, mid difficulty to impl
-   - Cons: Less realistic
- - Based on NFL
-   - Pros: Mid volatility
-   - Cons: Very difficult to impl, less realistic
- - Configurable
-   - Peak Age
-   - Std Dev
-   - Minimum Worth
- - Not curve... linear
-   - Every additional year requires X% more money than the previous. NFL increases cap by 7.5% annually (avg)
-   - What about prove-its?
-   - Extensions?
-     - Right... this was the point wasn't it? Argh.....
-     - Like a franchise tag... Look at past performance and other contracts at the position; upgrade their expectations by a certain %
-     - Rank N, seeking $ == N/2 plus annual increases including in year 1.
-       - If player ranked 10th at position, they expect to be paid as if the 5th best.
-       - If 5th biggest contract is currently $10M, a 1 year contract would need to be $10M * 1.08 == $10.8M. 2 year contract would be $10M * 1.08 + $10M * 1.08^2 == $22.464M aav
-       - But... How to handle injured years?
-         - Use averages, not totals when ranking.
-         - If fewer than M games played in contract year, they'll refuse to resign.
-       - How to handle top players?
-         - Players in top 5 at a position set the market...
-         - They break the market. Expectation is best contract by at least 10%
-       - Legal tampering as well?
-  - Retirements?
-    - Do teams still pay the full contract?
-      - If not, it'd be hard to prevent cap cheating. Example, very low early burden on a 4 year deal for a guy who's announced retirement after next season.
-        - Partially helped by preventing future years from exceeding cap + 10%/yr. 
+# Scribble Sheet
  - Immersion
    - AI driven twitter bots?
      - Trade announcements
      - Etc
    - Power Rankings
    - News
+   - Power Rankings
+
+## Startup Draft Options
+1. Auction draft
+2. Snake draft of actual NFL assets (current contract values and 2025 draft selections).
+
+Draft rookie draft selections for the current year and existing contracts, scaled so the greatest AAV for any position = 20% of the salary cap. Undrafted contracts become UFA for the following Free Agency period. Expired contracts can also be drafted and are tagged UFA or RFA appropriately. Drafted UFAs can be (a) franchise tagged or (b) dropped by the franchise tag deadline. Drafted RFAs can be (a) franchise tagged, (b) issued an RFA tender by the tender deadline, or (c) dropped by the RFA tender deadline.
+
+For simplicity, existing contracts consider average salary over the full term of the contract, not going forward. This has some side effects, notably (a) soon to expire contracts are often cheaper, and (b) long contracts are often cheaper like Mahomes'. Specific terms of the contract will be 100% allocation to salary bucket with a 5% backload starting in the original contract year. For example, Mahomes' contract of $450 million over 10 years would have an initial year cost of $35.7 million and a final year cost of $55.5 million (not adusted for top AAV being 20% of cap).
+
+At any point in the startup draft, a team can pass on making a selection. After doing so, they do not participate in the rest of the draft. It is recommended not to pass prior to all rookie draft selections have been claimed.
+
+
+
+18 roster spots
+3 QBs - $93 million
+7 WRs - 
+5 RBs - 
+3 TEs - 
