@@ -1,64 +1,10 @@
 # Salary Cap League
-
-## Contract Extensions
-Several options that could make it make sense.
- - By League
-   - Pros: More realistic, easier to implement
-   - Cons: More volatile
-   - Consider average annual salaries for each position.
-   - Consider salary curve by age in the league
-     - Factor in number of players at each age currently in the league
-     - Use a best fit curve
-       - Age
-       - Fantasy Points
-       - Salary
-       - By Position
- - Average of all leagues
-   - Pros: Less volatile, mid difficulty to impl
-   - Cons: Less realistic
- - Based on NFL
-   - Pros: Mid volatility
-   - Cons: Very difficult to impl, less realistic
- - Configurable
-   - Peak Age
-   - Std Dev
-   - Minimum Worth
- - Not curve... linear
-   - Every additional year requires X% more money than the previous. NFL increases cap by 7.5% annually (avg)
-   - What about prove-its?
-     - 
-   - Extensions?
-     - Right... this was the point wasn't it? Argh.....
-     - Like a franchise tag... Look at past performance and other contracts at the position; upgrade their expectations by a certain %
-     - Rank N, seeking $ == N/2 plus annual increases including in year 1.
-       - If player ranked 10th at position, they expect to be paid as if the 5th best.
-       - If 5th biggest contract is currently $10M, a 1 year contract would need to be $10M * 1.08 == $10.8M. 2 year contract would be $10M * 1.08 + $10M * 1.08^2 == $22.464M aav
-       - But... How to handle injured years?
-         - Use averages, not totals when ranking.
-         - If fewer than M games played in contract year, they'll refuse to resign.
-       - How to handle top players?
-         - Players in top 5 at a position set the market...
-         - They break the market. Expectation is best contract by at least 10%
-       - Legal tampering as well?
-  - Retirements?
-    - Do teams still pay the full contract?
-      - If not, it'd be hard to prevent cap cheating. Example, very low early burden on a 4 year deal for a guy who's announced retirement after next season.
-        - Partially helped by preventing future years from exceeding cap + 10%/yr. 
- - Immersion
-   - AI driven twitter bots?
-     - Trade announcements
-     - Etc
-   - Power Rankings
-   - News
+This document currently serves more as a draft of a CBA/League Agreement combined with some scratch notes for how the project should function. It will likely evolve over time.
 
 ## Contracts
 Contracts are defined by multiple years and types of burden. Each year should define the amount of money owed to the player which fits each of the following categories:
- - Guaranteed
-   - Salary: Money the player is owed this year.
-   - Signing Bonus: Money the player will be owed, spread evenly across all remaining contract years.
- - Not Guaranteed
-   - Roster Bonus: Money which will be converted into Salary at the start of the League New Year or forgiven if player isn't rostered then.
-   - Option Bonus: Money which will be converted into Signing Bonus at the start of the League New Year or be forgiven if player isn't rostered then.
+ - Salary: Money which is guaranteed to the player at time of signing, to be paid in the specified year.
+ - Roster Bonus: Money which converts into salary at the start of the League New Year but is forgiven if the player isn't rostered at that time.
  - Incentives: Money which is tied to certain achievable metrics (yards, touchdowns, games, fantasy points). Incentives must be readily perceptable in the Game Log section of a player profile in Sleeper, or must be tied to team success (playoff berth). For example, YPT between weeks 15 and 17 can be an incentive, but not completion percentage. Team owners are responsible for determining which incentives are LTBE vs NLTBE, and for determining whether or not they were earned at the end of the season.
    - Likely To Be Earned (LTBE): An incentive which the player would have met in their previous season. This money counts against the cap, but is given back as credit the following year if not earned.
    - Not Likely To Be Earned (NLTBE): An incentive which the player would not have met in their previous season. This money does not count against the cap, but will count towards next year's cap if earned. A contract may not include NLTBE incentives that exceed 125% of what the player has achieved in the past. For example, a player with a 1000 yard rushing season cannot accept a contract with an incentive for a 1500 yard rushing season. Additionally, NLTBE incentives can make up no more than 25% of a contracts total value.
@@ -75,12 +21,10 @@ Average Annual Value (AAV) is the total compensation of a player's contract incl
 
 #### Adjusted Average Annual Value
 Several times in the contract section, Adjusted Average Annual Value (AAV) is referenced. Essentially, Adjusted AAV is a tax on longer period contracts and low guarantees; players assume they'll improve and demand to be paid more in later years, and they value non-guaranteed money differently than guaranteed money. To calculate Adjusted AAV, follow these steps:
-1. Add 100% of the Signing bonus.
-2. Add 90% of the Salary.
-3. Add 70% of Option Bonus.
-4. Add 60% of the Roster Bonus.
-5. Add 40% of LTBE incentives.
-6. Add 20% of NLTBE incentives.
+1. Add 100% of the Salary.
+4. Add 75% of the Roster Bonus.
+5. Add 50% of LTBE incentives.
+6. Add 25% of NLTBE incentives.
 7. Divide this total by the number of contract years.
 8. Multiply this result by the Adjustment Multiplier in the following chart (based on 10% backloaded contracts):
 | Number of Years | Adjustment Multiplier |
@@ -95,9 +39,9 @@ Several times in the contract section, Adjusted Average Annual Value (AAV) is re
 | 9 | 0.662 |
 | 10 | 0.627 |
 
-Roster Bonus and Option Bonus may not be included in the first year of a contract offer.
+Roster Bonus may not be included in the first year of a contract offer.
 
-For example, a 4 year contract with a total of $25 million in signing bonus, $10 million in Roster Bonus, and $10 million in NLTBE incentives would have an Adjusted AAV of $7.533 million, despite having a potential $11.25 annual cap burden.
+For example, a 4 year contract with a total of $25 million in salary, $10 million in Roster Bonus, and $10 million in NLTBE incentives would have an Adjusted AAV of $7.533 million, despite having a potential $11.25 annual cap burden.
 
 A tool will be provided to all league members to assist in calculating Adjusted AAV. When submitting a Free Agency bid in Sleeper, bid an amount equal to the Adjusted AAV in thousands of dollars. For the above example, you'd bid 7533 FAAB.
 
@@ -128,11 +72,6 @@ For example, a player who ranked 10th in fantasy points per game at their positi
 When determining which Adjustement Multipler to use when calculating Adjusted AAV for a contract extension, count next season as the contract's first year. For example, a contract with 2 years left which seeks to add 3 years during the offseason would use a contract length of 5 in the Adjustment Multiplier chart.
 
 As part of an extension, teams may renegotiate the remainder of the current contract (excluding the current year, if League New Year has passed). To do this, see the section on restructuring contracts.
-
-### Signing Bonus Conversion
-Teams may convert any amount of salary for the upcoming season prior to the League New Year into a signing bonus, provided that the remaining salary remains above legal contract minimums. This spreads the cap burden for the converted amount across all remaining contract years.
-
-For example, a 5 year contract with $10 million in salary for the upcoming season might convert $5 million into a signing bonus, reducing the current year's cap burden by $4 million but increasing all subsequent years' cap burden by $1 million each.
 
 ### Restructure Contracts
 Teams are able to restructure contracts, provided they meet the each of the following requirements.
@@ -181,7 +120,7 @@ If tagging a player for a 3rd consecutive year, the compensation is instead the 
 
 A player cannot be tagged more than 3 years in a row.
 
-***Previous Year's Compensation*** includes the player's salary, signing bonus, roster bonus, option bonus, and all incentives which were earned (LTBE and NLTBE).
+***Previous Year's Compensation*** includes the player's salary, roster bonus, and all incentives which were earned (LTBE and NLTBE).
 
 ### Taxi Squad
 Any player may begin the season on the Taxi Squad, but no players may be added to the Taxi Squad after the start of the first game of the regular season. While on the taxi squad, players cannot start in games, nor be added to IR. Any player which remains on the practice squad through the end of the year will not be considered to have accrued a season for the purposes of Restricted Free Agency eligibility.
@@ -198,7 +137,7 @@ The Taxi Squad is similar to NFL Practice Squads only in ways specified in this 
 | 4-6 | 0.5% of cap |
 | 7+  | 0.6% of cap |
 
-If a player's existing contract does not meet these minimums in any given year, their salary is incresed for that year to match the league minimum value. No other contract bucket can substitute for salary when determining league minmum compliance. For example, signing bonuses do not count towards contract minimums.
+If a player's existing contract does not meet these minimums in any given year, their salary is incresed for that year to match the league minimum value. Roster bonuses and incentives do not count towards league minmum compliance.
 
 ### Compensatory Draft Selections
 Certain players are considered Compensatory Eligible when they sign with a new team in free agency. The following chart shows eligibility.
@@ -382,3 +321,53 @@ Waiver Wire / Free Agency (read - write)
    - Modify Offer
 
 CBA (readonly)
+
+## Scribble Sheet
+Several options that could make it make sense.
+ - By League
+   - Pros: More realistic, easier to implement
+   - Cons: More volatile
+   - Consider average annual salaries for each position.
+   - Consider salary curve by age in the league
+     - Factor in number of players at each age currently in the league
+     - Use a best fit curve
+       - Age
+       - Fantasy Points
+       - Salary
+       - By Position
+ - Average of all leagues
+   - Pros: Less volatile, mid difficulty to impl
+   - Cons: Less realistic
+ - Based on NFL
+   - Pros: Mid volatility
+   - Cons: Very difficult to impl, less realistic
+ - Configurable
+   - Peak Age
+   - Std Dev
+   - Minimum Worth
+ - Not curve... linear
+   - Every additional year requires X% more money than the previous. NFL increases cap by 7.5% annually (avg)
+   - What about prove-its?
+   - Extensions?
+     - Right... this was the point wasn't it? Argh.....
+     - Like a franchise tag... Look at past performance and other contracts at the position; upgrade their expectations by a certain %
+     - Rank N, seeking $ == N/2 plus annual increases including in year 1.
+       - If player ranked 10th at position, they expect to be paid as if the 5th best.
+       - If 5th biggest contract is currently $10M, a 1 year contract would need to be $10M * 1.08 == $10.8M. 2 year contract would be $10M * 1.08 + $10M * 1.08^2 == $22.464M aav
+       - But... How to handle injured years?
+         - Use averages, not totals when ranking.
+         - If fewer than M games played in contract year, they'll refuse to resign.
+       - How to handle top players?
+         - Players in top 5 at a position set the market...
+         - They break the market. Expectation is best contract by at least 10%
+       - Legal tampering as well?
+  - Retirements?
+    - Do teams still pay the full contract?
+      - If not, it'd be hard to prevent cap cheating. Example, very low early burden on a 4 year deal for a guy who's announced retirement after next season.
+        - Partially helped by preventing future years from exceeding cap + 10%/yr. 
+ - Immersion
+   - AI driven twitter bots?
+     - Trade announcements
+     - Etc
+   - Power Rankings
+   - News

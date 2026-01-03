@@ -15,7 +15,7 @@ def getParser(add_help=True):
     parser = argparse.ArgumentParser(description="Allows the creation and manipulation of leagues", add_help=add_help)
     parser.add_argument("--league-id", type=int, help="The LeagueID for the league you wish to manipulate")
     parser.add_argument("--find-leagues", metavar="USERNAME", help="When used, the program finds league IDs associated with the username provided")
-    parser.add_argument("--sport", default="nfl", help="Specify which sport. Default: NBA")
+    parser.add_argument("--sport", default="nfl", help="Specify which sport. Default: NFL")
     parser.add_argument("--year", default=datetime.date.today().year, type=int, help="The year which you want to reference. Default: {}".format(datetime.date.today().year))
     parser.add_argument("--force-update", action="store_true", help="Forces an update to the players list")
     parser.add_argument("--get-picks", metavar="USERNAME", help="Returns the draft picks for your roster")
