@@ -1,0 +1,12 @@
+.devcontainer
+
+classes/__pycache__
+classes/cache/*
+!classes/cache/updatePlayers.py
+
+salaryleague/.angular
+salaryleague/.vscode
+salaryleague/dist
+salaryleague/node_modules
+
+src
