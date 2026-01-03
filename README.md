@@ -53,13 +53,13 @@ No single year on a contract can have guaranteed money equal to less than 10% of
 
 #### Other Contract Terminology
 ***Full Burden.*** The total amount of money on a contract, including guaranteed and non-guaranteed from all years at full value.
-:
+
 ***Remaining Burden.*** The full burden of a contract, but only counting remaining contract years (including current).
-:
+
 ***Future Burden.*** The full burden of a contract, but only counting future contract years (not including current).
-:
+
 ***League New Year.*** When contract burdens are counted towards salary cap, among other things mentioned throughout.
-:
+
 ***Current Year.*** If between the Championship Game Conclusion and League New Year, this refers to the upcoming season. Otherwise, it refers to the active season.
 
 ### Extension
@@ -115,10 +115,11 @@ Draft selections receive 4 year contracts. This means to be RFA eligible, they m
 
 ### Franchise Tag
 Each franchise may designate a tag to only one of their players each offseason whose contract has just expired. There are three types of franchise tag:
+
 ***Exclusive Tag.*** This tag acts as a forced one year contract upon the player with no opportunity for other teams to submit a contract offer. This contract has a salary at the greater of (a) 120% of the player's previous year's compensation or (b) the average of the top 5 contract AAVs from last season at the player's own position.
-:
+
 ***Non-Exclusive Tag.*** This tag acts as a one year contract offer which is made final if the player does not accept any other offer, with a salary at the greater of (a) 120% their previous year's compensation or (b) the average of the top 5 contract AAVs from last season at the player's own position. Other teams may submit Free Agency offers to the tagged player, but the original team has right of first refusal to match any accepted offer. Submitted offers must have a higher Adjusted AAV than the non-exclusive tag's tendered amount. If the original team does not match the offer, the team who signs the tagged player must relinquish their two most recent first round draft selections no further than two drafts in advance. For example, a team signing a non-exclusive tagged free agent in March 2025 must give two 2025 first round picks if available, one 2025 first and one 2026 first if the prior option is impossible, or two 2026 firsts if neither of the prior two options are possible.
-:
+
 ***Transition Tag.*** This tag acts as a one year contract offer which is made final if the player does not accept any other offer, with a salary at the greater of (a) 120% of their previous year's compensation or (b) the average of the top 10 contract AAVs from last season at the player's own position. Other teams may submit Free Agency offers to the tagged player, but the original team has the right of first refusal to match any accepted offer. Submitted offers must have a higher adjusted AAV than the transition tag's tendered amount.
 
 Players can be tagged in consecutive years, but the Transition Tag can be used only during the first year.
