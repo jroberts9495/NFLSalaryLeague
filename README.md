@@ -1,6 +1,10 @@
 # Salary Cap League
 This document currently serves more as a draft of a CBA/League Agreement combined with some scratch notes for how the project should function. It will likely evolve over time.
 
+The most useful bit of code currently included is the python code (/main.py and /classes) which allow you to pull a lot of information about a sleeper fantasy football league on demand. It also has a built in cache to prevent repeatedly pinging sleeper's heavier APIs.
+
+No license is currently offered, though that is likely to change. I doubt I'll ever build this out robust enough to seek exclusive rights.
+
 ## Contracts
 Contracts are defined by multiple years and types of burden. Each year should define the amount of money owed to the player which fits each of the following categories:
  - Salary: Money which is guaranteed to the player at time of signing, to be paid in the specified year.
@@ -342,3 +346,5 @@ At any point in the startup draft, a team can pass on making a selection. After 
 7 WRs - 
 5 RBs - 
 3 TEs - 
+
+Copyright 2026 Jonathan Roberts. All Rights Reserved.
