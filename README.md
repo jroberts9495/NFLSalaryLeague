@@ -8,7 +8,7 @@ No license is currently offered, though that is likely to change. I doubt I'll e
 ## Contracts
 Contracts are defined by multiple years and types of burden. Each year should define the amount of money owed to the player which fits each of the following categories:
  - Salary: Money which is guaranteed to the player at time of signing, to be paid in the specified year.
- - Roster Bonus: Money which converts into salary at the start of the League New Year but is forgiven if the player isn't rostered at that time.
+ - Roster Bonus: Money which converts into salary on March 5th but is forgiven if the player isn't rostered at that time.
  - Incentives: Money which is tied to certain achievable metrics (yards, touchdowns, games, fantasy points). Incentives must be readily perceptable in the Game Log section of a player profile in Sleeper, or must be tied to team success (playoff berth). For example, YPT between weeks 15 and 17 can be an incentive, but not completion percentage. Team owners are responsible for determining which incentives are LTBE vs NLTBE, and for determining whether or not they were earned at the end of the season.
    - Likely To Be Earned (LTBE): An incentive which the player would have met in their previous season. This money counts against the cap, but is given back as credit the following year if not earned.
    - Not Likely To Be Earned (NLTBE): An incentive which the player would not have met in their previous season. This money does not count against the cap, but will count towards next year's cap if earned. A contract may not include NLTBE incentives that exceed 125% of what the player has achieved in the past. For example, a player with a 1000 yard rushing season cannot accept a contract with an incentive for a 1500 yard rushing season. Additionally, NLTBE incentives can make up no more than 25% of a contracts total value.
@@ -26,9 +26,10 @@ Average Annual Value (AAV) is the total compensation of a player's contract incl
 #### Adjusted Average Annual Value
 Several times in the contract section, Adjusted Average Annual Value (AAV) is referenced. Essentially, Adjusted AAV is a tax on longer period contracts and low guarantees; players assume they'll improve and demand to be paid more in later years, and they value non-guaranteed money differently than guaranteed money. To calculate Adjusted AAV, follow these steps:
 1. Add 100% of the Salary.
-4. Add 75% of the Roster Bonus.
-5. Add 50% of LTBE incentives.
-6. Add 25% of NLTBE incentives.
+4. Add 75% of the Roster Bonus for the first 25% of Full Burden, and 50% of the Roster Bonus for the next 25% of AAV.
+  - If Roster Bonus composes more than 50% of contract AAV, only the first 50% contributes to Adjusted AAV
+5. Add 50% of LTBE incentives for the first 20% of AAV.
+6. Add 25% of NLTBE incentives for the first 20% of AAV iff threshold is within 20% of what player has previously achieved.
 7. Divide this total by the number of contract years.
 8. Multiply this result by the Adjustment Multiplier in the following chart (based on 10% backloaded contracts):
 | Number of Years | Adjustment Multiplier |
@@ -62,16 +63,16 @@ No single year on a contract can have guaranteed money equal to less than 10% of
 
 ***Future Burden.*** The full burden of a contract, but only counting future contract years (not including current).
 
-***League New Year.*** When contract burdens are counted towards salary cap, among other things mentioned throughout.
+***Offseason.*** The full period of time between the Championship Game Conclusion and the opening kickoff of the NFL regular season.
 
-***Current Year.*** If between the Championship Game Conclusion and League New Year, this refers to the upcoming season. Otherwise, it refers to the active season.
+***Current Year.*** During the offseason, current year refers to the upcoming season's year. Otherwise, it refers to the active season's year.
 
 ### Extension
 Players can be extended by their current team, provided they meet each of the following requirements.
  - Current contract has not expired.
  - No more than 2 years remain on their contract (including current year).
  - The player participated (IRL) in at least 5 games in their previous or current season.
- - The extended contract will last no more than 5 seasons (including current year), or 4 seasons if signed before League New Year.
+ - The extended contract will last no more than 5 seasons (including current year), or 4 seasons if signed during the offseason.
  - If they are a rookie, the player has already finished their 3rd season.
 
 A player will sign an extension offer if the extension years (which do not include current contract terms) have an Adjusted AAV greater than or equal to the Nth best contract AAV at their position, where N is equal to half the player's positional finish in fantasy points per game rounded down in the greater of (a) the prior season or (b) the current season, assuming 5 or more games have been played. If N is <= 2 (player's positional finish in fantasy points per game was 5th or better), their expectation is instead an Adjusted AAV of at least 110% of the most valuable contract's actual AAV at their position.
@@ -80,7 +81,7 @@ For example, a player who ranked 10th in fantasy points per game at their positi
 
 When determining which Adjustement Multipler to use when calculating Adjusted AAV for a contract extension, count next season as the contract's first year. For example, a contract with 2 years left which seeks to add 3 years during the offseason would use a contract length of 5 in the Adjustment Multiplier chart.
 
-As part of an extension, teams may renegotiate the remainder of the current contract (excluding the current year, if League New Year has passed). To do this, see the section on restructuring contracts.
+As part of an extension, teams may renegotiate the remainder of the current contract (excluding the current year unless signed during the offseason). To do this, see the section on restructuring contracts.
 
 ### Restructure Contracts
 Teams are able to restructure contracts, provided they meet the each of the following requirements.
@@ -139,7 +140,7 @@ Any player may begin the season on the Taxi Squad, but no players may be added t
 
 The Taxi Squad has a total of 6 slots available. 4 of these slots are reserved for players with no more than two accrued seasons.
 
-Teams can submit a Raid Request for a player on another team's Taxi Squad. To do this, the team will submit a public Contract Offer to that player with the same Contract Length and an AAV at least 25% greater than the player's current contract. The team whose Taxi Squad currently hosts the player has 24 hours after seeing this Raid Request to either promote the player to their active roster or relinquish control of the player to the raiding team's active roster at the agreed upon contract value. No dead money is created as a part of a raid.
+Teams can submit a Raid Request for a player on another team's Taxi Squad. To do this, the team will submit a public Contract Offer to that player with the same Contract Length, fully guaranteed, and an AAV at least 25% greater than the player's current contract. The team whose Taxi Squad currently hosts the player has 24 hours after seeing this Raid Request to either promote the player to their active roster or relinquish control of the player to the raiding team's active roster at the agreed upon contract value. No dead money is created as a part of a raid.
 
 The Taxi Squad is similar to NFL Practice Squads only in ways specified in this section. For example, the Taxi Squad does not affect players' salary, and they are given contracts under the same rules and restrictions as anyone on the active roster.
 
@@ -189,6 +190,7 @@ Actual contract AAV per rookie selection will be published annually.
 
 First round selections will have 5th year team options. This option must be executed in the offseason before the rookie's final contract year prior to the 5th Year Option Deadline. If executed, the 5th year salary will pay based on the rookie's performance in their first three seasons as follows.
 | Performance Criteria | 5th Year Salary |
+|:-|:-|
 | Multiple Top 5 Positional PPG Finishes | Exclusive Tag Value |
 | At Least One Top 5 Positional PPG Finish | Transition Tag Value |
 | Otherwise | The Nth Highest Positional AAV, Where N = The Player's Best PPG Finish In First 3 Seasons |
@@ -204,14 +206,11 @@ Teams may not have more cap burden than the salary cap at any point in a given s
 The NFL salary cap has averaged an increase of 7.5% per year over the last 30 years, but there is no guarantee of this. In some seasons, it has been as high as 25% and as low as -7%. Teams will deal with the actual challenges of a flucutating cap, and should they find themselves over the cap as a result of poor planning, they'll be forced to renegotiate contracts at their own expense.
 
 ### Cap Credits and Penalties
-If a team's largest cap burden during a season is less than the league salary cap, they receive a cap credit equal to the difference in the following season.
+If a team's largest cap burden at the end of a season is less than the league salary cap, they receive a cap credit equal to the difference but not exceeding 10% of that year's cap in the following season.
 
 If an LTBE incentive from the previous season was not achieved, the team receives a cap credit equal to the value of the incentive.
 
 If an NLTBE incentive from the previous season was achieved, the team receives a cap penalty equal to the value of the incentive.
-
-### Cap Minimum
-If a team's salary cap burden at the start of League New Year is below 85% of the league salary cap, all current year contracts' salaries will be increased by an equal amount until the team meets this threshold.
 
 ### Projected Spending
 A team cannot commit more than 120% of the current salary cap in any future year, including guaranteed contract money and dead cap hit.
@@ -230,6 +229,7 @@ Below is a sample Offseason Schedule for a typical league year. The first year w
 |:-|:-|
 | Championship Game Conclusion | Waiver Wire Deadline |
 |                              | Contract Extensions Deadline |
+|                              | All roster moves frozen |
 |                              | League Year Ends |
 | January 7 | Offseaon Survey Released |
 |           | Deadline to Opt Out of League Participation (Buy-In Must Be Paid if Opting Out After This Date) |
@@ -239,10 +239,12 @@ Below is a sample Offseason Schedule for a typical league year. The first year w
 | February 1 | Contract Extension Reopens |
 |            | Franchise Tag Period Begins |
 |            | Player Incentives Report Validated and Contracts Updated |
+|            | Roster Cuts allowed |
 | March 1 | Deadline to Franchise Tag Players |
 |         | Deadline to Tender Offers to RFAs |
 |         | Salary Cap Announced |
 |         | Rookie Pay Scales Announced |
+| March 5 | Roster Bonus for current year converts to Salary |
 | March 9 | Free Agency and Trading Begins |
 |         | First Free Agency Nominations Due |
 | April 13 | Deadline to nominate RFAs for Free Agency Bidding |
@@ -256,7 +258,7 @@ Below is a sample Offseason Schedule for a typical league year. The first year w
 |       | 5th Year Option Deadline |
 | May 14 | This Year's Schedule Announced |
 |        | Next Year's Offseason Schedule Released |
-| July 1 | League New Year |
+| July 1 | League New Year | // TODO NFL does Mar 1...
 | Week 1 | Taxi Squad Designation Deadline |
 |        | Raid Requests Allowed |
 | Week 12 Conclusion | Trade Deadline |
