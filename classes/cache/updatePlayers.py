@@ -1,27 +1,28 @@
-#!/c/Users/jrobe/AppData/Local/Microsoft/WindowsApps/python
+#!/usr/local/bin/python3
 
 import datetime, json, sys, os
 from requests import get
 
-def update(dirname, force=False, quiet=False, sport="nba", year=datetime.date.today().year):
-    updatePlayers(os.path.join(dirname, "NBAplayers.json"), force, quiet, sport)
-    updateStats(os.path.join(dirname, "NBAstats.json"), force, quiet, sport, year)
+def update(dirname, force=False, quiet=False, year=datetime.date.today().year):
+    updatePlayers(os.path.join(dirname, "NFLplayers_{}.json".format(year)), force, quiet)
+    updateStats(os.path.join(dirname, "NFLstats_{}.json".format(year)), force, quiet, year)
 
-def updateStats(filename, force=False, quiet=False, sport="nba", year=datetime.date.today().year):
+def updateStats(filename, force=False, quiet=False, year=datetime.date.today().year):
     today = datetime.date.today()
 
-    with open(filename, "r") as rb:
-        currPlayers = json.load(rb)
+    if os.path.exists(filename):
+        with open(filename, "r") as rb:
+            currPlayers = json.load(rb)
 
-    if currPlayers["lastUpdated"] == str(today):
-        if not force:
-            if not quiet:
-                print("Updated stats already today, reupdate not recommended")
-            return 1
-        else:
-            print("Forcing update of stats (not recommended)")
+        if currPlayers["lastUpdated"] == str(today):
+            if not force:
+                if not quiet:
+                    print("Updated stats already today, reupdate not recommended")
+                return 1
+            else:
+                print("Forcing update of stats (not recommended)")
 
-    updatedStats = json.loads(get("https://api.sleeper.app/v1/stats/{}/regular/{}".format(sport, year)).content)
+    updatedStats = json.loads(get("https://api.sleeper.app/v1/stats/nfl/regular/{}".format(year)).content)
 
     with open(filename, "w") as wb:
         json.dump(
@@ -36,21 +37,22 @@ def updateStats(filename, force=False, quiet=False, sport="nba", year=datetime.d
     return 0
 
 
-def updatePlayers(filename, force=False, quiet=False, sport="nba"):
+def updatePlayers(filename, force=False, quiet=False):
     today = datetime.date.today()
 
-    with open(filename, "r") as rb:
-        currPlayers = json.load(rb)
+    if os.path.exists(filename):
+        with open(filename, "r") as rb:
+            currPlayers = json.load(rb)
 
-    if currPlayers["lastUpdated"] == str(today):
-        if not force:
-            if not quiet:
-                print("Updated players already today, reupdate not recommended")
-            return 1
-        else:
-            print("Forcing update of players (not recommended)")
+        if currPlayers["lastUpdated"] == str(today):
+            if not force:
+                if not quiet:
+                    print("Updated players already today, reupdate not recommended")
+                return 1
+            else:
+                print("Forcing update of players (not recommended)")
 
-    updatedPlayers = json.loads(get("https://api.sleeper.app/v1/players/{}".format(sport)).content)
+    updatedPlayers = json.loads(get("https://api.sleeper.app/v1/players/nfl").content)
 
     with open(filename, "w") as wb:
         json.dump(
@@ -65,7 +67,10 @@ def updatePlayers(filename, force=False, quiet=False, sport="nba"):
     return 0
 
 def main():
-    update(os.path.dirname(sys.argv[0]), year=datetime.date.today().year-1)
+    ii = 2010
+    while ii < 2026:
+        update(os.path.dirname(sys.argv[0]), year=ii) #datetime.date.today().year-1)
+        ii += 1
 
 if __name__ == "__main__":
     main()

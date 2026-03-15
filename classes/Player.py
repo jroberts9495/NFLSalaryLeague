@@ -5,7 +5,7 @@ import json
 class Player:
     def __init__(self, id: str, players: dict, stats: dict, scoring: dict):
         me = players[id]
-        myStats = stats[id]
+        self.stats = stats[id]
         self.name = me["full_name"]
         self.positions = me["fantasy_positions"]
         self.rookie = me["years_exp"] == 0
@@ -14,9 +14,9 @@ class Player:
         self.active = me["active"]
         season_score = 0
         for key, value in scoring.items():
-            if key in myStats:
-                season_score += myStats[key]*value
-        self.ppg = round(season_score / (1 if "gp" not in myStats else myStats["gp"]), 2)
+            if key in self.stats:
+                season_score += self.stats[key]*value
+        self.ppg = round(season_score / (1 if "gp" not in self.stats else self.stats["gp"]), 2)
 
     def __eq__(self, obj):
         return isinstance(obj, Player) and self.name == obj.name

@@ -32,4 +32,4 @@ class DraftPick:
             6: "6th"
         }
 
-        return "{} {} ({})".format(self.year, fancyRound.get(self.round), self.orig_owner)
+        return "{} {} ({})".format(self.year, fancyRound.get(self.round, str(self.round)), self.orig_owner)

@@ -1,12 +1,62 @@
-.devcontainer
 
-classes/__pycache__
+# --- Cached data ---
 classes/cache/*
 !classes/cache/updatePlayers.py
 
-salaryleague/.angular
-salaryleague/.vscode
-salaryleague/dist
-salaryleague/node_modules
-
+# --- Dumb backup folder ---
 backup
+
+# --- System / OS ---
+.DS_Store
+Thumbs.db
+
+# --- VS Code ---
+.vscode/
+!.vscode/extensions.json
+*.code-workspace
+
+# --- Backend (Python/Flask) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+build/
+dist/
+*.egg-info/
+instance/
+.pytest_cache/
+
+# --- Frontend (Angular) ---
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node dependencies
+node_modules/
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+*.sublime-project
+*.sublime-workspace
+
+# Testing
+/coverage
+/e2e/dist
+/e2e/downloads
+
+# Angular CLI
+.angular/
+
+# --- Docker ---
+.docker/

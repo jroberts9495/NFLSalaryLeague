@@ -258,7 +258,7 @@ Below is a sample Offseason Schedule for a typical league year. The first year w
 |       | 5th Year Option Deadline |
 | May 14 | This Year's Schedule Announced |
 |        | Next Year's Offseason Schedule Released |
-| July 1 | League New Year | // TODO NFL does Mar 1...
+| July 1 | League New Year // TODO NFL does Mar 1... Though we don't have any rules tied to it, so does date matter? |
 | Week 1 | Taxi Squad Designation Deadline |
 |        | Raid Requests Allowed |
 | Week 12 Conclusion | Trade Deadline |
