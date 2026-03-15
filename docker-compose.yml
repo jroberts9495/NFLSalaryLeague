@@ -1,0 +1,12 @@
+services:
+  # Backend
+  thebrains:
+    build: ./thebrains
+
+  # Frontend
+  salaryleague:
+    build: ./salaryleague
+    ports:
+      - "4200:4200"
+    depends_on:
+      - thebrains
