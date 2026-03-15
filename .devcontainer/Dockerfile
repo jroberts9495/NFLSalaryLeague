@@ -32,5 +32,10 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
+# 6. Fix Docker Socket Permissions
+# We create the docker group and add the vscode user to it
+RUN groupadd -f docker && \
+    usermod -aG docker $USERNAME
+
 # Set the default user
 USER $USERNAME

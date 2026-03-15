@@ -16,5 +16,6 @@
             ]
         }
     },
+    "onCreateCommand": "sudo chown vscode /var/run/docker.sock || true",
     "remoteUser": "vscode"
 }
