@@ -2,9 +2,9 @@
 
 import argparse, json, sys, datetime, os
 from requests import get
-from classes.League import League
-from classes.Constants import Constants
-from classes.cache.updatePlayers import updateStats, updatePlayers
+from app.models.League import League
+from app.models.Constants import Constants
+from app.utils import updatePlayers
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,7 +13,7 @@ from math import floor
 
 def getParser(add_help=True):
     parser = argparse.ArgumentParser(description="Allows the creation and manipulation of leagues", add_help=add_help)
-    parser.add_argument("--league-id", type=int, help="The LeagueID for the league you wish to manipulate")
+    parser.add_argument("--league-id", type=int, default=Constants.LEAGUE_ID, help="The LeagueID for the league you wish to manipulate")
     parser.add_argument("--find-leagues", metavar="USERNAME", help="When used, the program finds league IDs associated with the username provided")
     parser.add_argument("--sport", default="nfl", help="Specify which sport. Default: NFL")
     parser.add_argument("--year", default=datetime.date.today().year, type=int, help="The year which you want to reference. Default: {}".format(datetime.date.today().year))
@@ -31,6 +31,7 @@ def findLeagues(username, sport, year):
     dirtyLeagues = json.loads(get("{}{}/leagues/{}/{}".format(Constants.USER_URI, uid, sport, year)).content)
     for league in dirtyLeagues:
         print("Name: {}, LeagueID: {}".format(league["name"], league["league_id"]))
+    return dirtyLeagues
 
 def gaussian(x, amp, mean, std_dev):
     return amp * np.exp(-(x-mean)**2 / (2*std_dev**2))
@@ -88,15 +89,12 @@ def main(argv = sys.argv[1:]):
 
     league_id = Constants.WHITE_HOUSE_LEAGUE_ID if not args.league_id else args.league_id
     sport = args.sport.lower()
-    players_cache_dir = os.path.join(os.path.dirname(sys.argv[0]), "classes/cache/")
+    players_cache_dir = "/workspaces/Sleeper/backup/cache/" # "/app/data"
 
-    if not updatePlayers(os.path.join(players_cache_dir, "NBAplayers.json" if args.sport == "nba" else "NFLplayers.json"), args.force_update, True, args.sport):
-        print("Players list updated")
-    if not updateStats(os.path.join(players_cache_dir, "NBAstats.json" if args.sport == "nba" else "NFLstats.json"), args.force_update, True, args.sport, datetime.date.today().year-1):
-        print("Stats updated")
+    updatePlayers.main([players_cache_dir])
 
     if args.find_leagues:
-        findLeagues(args.find_leagues, sport, args.year)
+        return findLeagues(args.find_leagues, sport, args.year)
     else:
         league = League(league_id, args.year, players_cache_dir)
         # print(json.dumps(league, default=lambda o: o.__dict__))
@@ -119,6 +117,7 @@ def main(argv = sys.argv[1:]):
             players.extend(user.roster.players)
         if args.age_curve:
             age_curves(players, args.age_curve/100 if args.age_curve else 0.25)
+        return players
 
 if __name__ == "__main__":
     main()

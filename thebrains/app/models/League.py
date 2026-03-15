@@ -17,10 +17,10 @@ class League:
         league = json.loads(get("{}{}".format(Constants.LEAGUE_URI, leagueId)).content)
         dirtyScoring = league["scoring_settings"]
         sport = league["sport"]
-        with open(os.path.join(cachedir, "NBAplayers.json" if sport == "nba" else "NFLplayers.json")) as rb:
-            playerRef = json.load(rb)["players"]
-        with open(os.path.join(cachedir, "NBAstats.json" if sport == "nba" else "NFLstats.json")) as rb:
-            statsRef = json.load(rb)["stats"]
+        with open(os.path.join(cachedir, "NBAplayers.json" if sport == "nba" else "NFLplayers.json".format())) as rb:
+            playerRef = json.load(rb)
+        with open(os.path.join(cachedir, "NBAstats.json" if sport == "nba" else "NFLstats_{}.json".format(year))) as rb:
+            statsRef = json.load(rb)
         ridToName = {}
         for roster in dirtyRosters:
             for user in dirtyUsers:

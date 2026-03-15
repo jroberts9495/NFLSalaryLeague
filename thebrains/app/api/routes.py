@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from app.utils import oldleaguemanager
 
 # Create the blueprint
 api_bp = Blueprint('api', __name__)
@@ -17,3 +18,7 @@ def multiply_number(num):
         "operation": "multiplication",
         "factor": 2
     }), 200
+
+@api_bp.route('/team/<user>', methods=['GET'])
+def get_team(user):
+    return jsonify(oldleaguemanager.main(["--league", "1229556252934164480", "--get-players", user, "--year", 2025])), 200

@@ -2,6 +2,10 @@ services:
   # Backend
   thebrains:
     build: ./thebrains
+    environment:
+      - PYTHON_PATH=./thebrains
+    volumes:
+      - datastore:/app/data  # Using a named volume
 
   # Frontend
   salaryleague:
@@ -10,3 +14,7 @@ services:
       - "4200:4200"
     depends_on:
       - thebrains
+
+# You must define the volume name at the bottom of the file
+volumes:
+  datastore:
