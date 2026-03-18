@@ -1,6 +1,7 @@
 #!/c/Users/jrobe/AppData/Local/Microsoft/WindowsApps/python
 
-from classes.Player import Player
+from app.models.Player import Player
+from app.models.Constants import Constants
 
 class Incentive:
     def isValid(self, player:Player):
@@ -244,21 +245,146 @@ class Incentive:
         return options
 
 class ContractYear:
-    def __init__(self):
-        self.salary
-        self.rosterBonus
-        self.ltbe
-        self.nltbe
-        self.incentiveTBD
+    def convertIncentiveTBD(self, player: Player):
+        for incentive in self.incentiveTBD:
+            if incentive.hasVested(player):
+                self.ltbe.append(incentive)
+            else:
+                self.nltbe.append(incentive)
+        self.incentiveTBD = []
+
+    def total(self):
+        return self.salary + self.rosterBonus + self.ltbe + self.nltbe + self.incentiveTBD
+
+    def __init__(self,
+                  salary: float = 0.0,
+                  rosterBonus: float = 0.0,
+                  ltbe: list[Incentive] = None,
+                  nltbe: list[Incentive] = None,
+                  incentiveTBD: list[Incentive] = None):
+        self.salary = salary
+        self.rosterBonus = rosterBonus
+        self.ltbe = ltbe if ltbe is not None else []
+        self.nltbe = nltbe if nltbe is not None else []
+        self.incentiveTBD = incentiveTBD if incentiveTBD is not None else []
+
+    def __add__(self, oth):
+        if isinstance(oth, ContractYear):
+            return ContractYear(
+                salary=self.salary + oth.salary,
+                rosterBonus=self.rosterBonus + oth.rosterBonus,
+                ltbe=self.ltbe + oth.ltbe,
+                nltbe=self.nltbe + oth.nltbe,
+                incentiveTBD=self.incentiveTBD + oth.incentiveTBD
+            )
+        return NotImplemented
+
+class ContractType(Enum):
+    ACTIVE = "Active"
+    DEAD_MONEY = "Dead Money"
+    FREE_AGENT_OFFER = "Free Agent Offer"
+    EXTENSION_OFFER = "Extension Offer"
+    RESTRUCTURE_OFFER = "Restructure Offer"
 
 class Contract:
-    def __init__(self):
-        self.start
-        self.rookie
-        self.fifthYearOptionAvailable
-        self.state # [ACTIVE, BID, DEADMONEY]
-        self.taggedYears # TODO. NFL does 3 tags lifetime. If that's the case, this is not the right place for this, probably
-        self.contractYears
+    def getFullBurden(self):
+        burden = 0
+        for year, contract in self.contractYears.items():
+            burden += contract.total()
+        return burden
+
+    def getAdjustedAAV(self, player: Player):
+        collapsedYear = ContractYear()
+        maxYear = Constants.LEAGUE_YEAR
+        for year, contract in self.contractYears.items():
+            maxYear = max(maxYear, year)
+            collapsedYear += contract
+        collapsedYear.convertIncentiveTBD()
+        fullBurden = collapsedYear.total()
+        adjustedAAV = collapsedYear.salary
+        if collapsedYear.rosterBonus < fullBurden * 0.25:
+            adjustedAAV += collapsedYear.rosterBonus * 0.75
+        else:
+            adjustedAAV += fullBurden * 0.25 * 0.75
+            if collapsedYear.rosterBonus < fullBurden * 0.5:
+                adjustedAAV += (collapsedYear.rosterBonus - fullBurden * 0.25) * 0.5
+            else:
+                adjustedAAV += fullBurden * 0.25 * 0.5
+        if collapsedYear.ltbe < fullBurden * 0.2:
+            adjustedAAV += collapsedYear.ltbe * 0.5
+        else:
+            adjustedAAV += fullBurden * 0.2 * 0.5
+        if collapsedYear.nltbe < fullBurden * 0.2:
+            adjustedAAV += collapsedYear.nltbe * 0.25
+        else:
+            adjustedAAV += fullBurden * 0.2 * 0.25
+        adjustedAAV /= len(self.contractYears)
+        return adjustedAAV * [
+            1.000, # 0 year contract
+            1.000, # 1 year contract
+            0.952, # 2 year contract
+            0.906, # 3 year contract
+            0.861, # 4 year contract
+            0.818, # 5 year contract
+            0.777, # 6 year contract
+            0.737, # 7 year contract
+            0.699, # 8 year contract
+            0.662, # 9 year contract
+            0.627  # 10 year contract
+        ][1 + maxYear - self.start]
+
+    def isValid(self):
+        errors = []
+        if self.fifthYearOptionAvailable and not self.rookie:
+            errors.append("Fifth Year Option on Non Rookie Deal")
+        if not len(self.contractYears):
+            errors.append("No contract years")
+        self.contractYears = dict(sorted(self.contractYears.items()))
+        if next(iter(self.contractYears)) != self.start:
+            errors.append("Start year is not the same as first contract year")
+        fullBurden = self.getFullBurden()
+        if fullBurden <= 0.0:
+            errors.append("No money offered")
+        if len(self.contractYears) > 5:
+            errors.append("More than 5 contract years")
+        prevYear = self.start - 1
+        for year, contractYear in sorted(self.contractYears.items()):
+            if year != prevYear + 1:
+                errors.append("Skipped year {}".format(prevYear+1))
+            prevYear = year
+            if contractYear.total() < fullBurden * 0.1:
+                errors.append("{} doesn't share at least 10 percent of full burden".format(year))
+        if self.state == ContractType.EXTENSION_OFFER:
+            errors.extend(self.isValidExtension())
+        if self.state == ContractType.RESTRUCTURE_OFFER:
+            errors.extend(self.isValidRestructure())
+        return bool(len(errors)), errors
+
+    def isValidExtension(self):
+        return NotImplemented
+
+    def isValidRestructure(self):
+        return NotImplemented
+
+    def __init__(self,
+                  rookie : bool = False,
+                  fifthYearOptionAvailable : bool = False,
+                  state : ContractType = ContractType.FREE_AGENT_OFFER,
+                  taggedYears : int = 0,
+                  contractYears : dict = None):
+        self.rookie = rookie
+        self.fifthYearOptionAvailable = fifthYearOptionAvailable
+        self.state = state
+        self.taggedYears = taggedYears # TODO. NFL does 3 tags lifetime. If that's the case, this is not the right place for this, probably
+        self.contractYears = contractYears if contractYears is not None else {}
+        if len(self.contractYears):
+            self.contractYears = dict(sorted(self.contractYears.items()))
+            self.start = next(iter(self.contractYears))
+        else:
+            self.start = None
+
+    def __add__(self, oth):
+        return NotImplemented
 
     def __eq__(self, obj):
         return isinstance(obj, Contract) and \

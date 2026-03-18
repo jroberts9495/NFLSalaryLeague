@@ -26,12 +26,12 @@ Average Annual Value (AAV) is the total compensation of a player's contract incl
 #### Adjusted Average Annual Value
 Several times in the contract section, Adjusted Average Annual Value (AAV) is referenced. Essentially, Adjusted AAV is a tax on longer period contracts and low guarantees; players assume they'll improve and demand to be paid more in later years, and they value non-guaranteed money differently than guaranteed money. To calculate Adjusted AAV, follow these steps:
 1. Add 100% of the Salary.
-4. Add 75% of the Roster Bonus for the first 25% of Full Burden, and 50% of the Roster Bonus for the next 25% of AAV.
+2. Add 75% of the Roster Bonus for the first 25% of Full Burden, and 50% of the Roster Bonus for the next 25% of AAV.
   - If Roster Bonus composes more than 50% of contract AAV, only the first 50% contributes to Adjusted AAV
-5. Add 50% of LTBE incentives for the first 20% of AAV.
-6. Add 25% of NLTBE incentives for the first 20% of AAV iff threshold is within 20% of what player has previously achieved.
-7. Divide this total by the number of contract years.
-8. Multiply this result by the Adjustment Multiplier in the following chart (based on 10% backloaded contracts):
+3. Add 50% of LTBE incentives for the first 20% of AAV.
+4. Add 25% of NLTBE incentives for the first 20% of AAV iff threshold is within 20% of what player has previously achieved.
+5. Divide this total by the number of contract years.
+6. Multiply this result by the Adjustment Multiplier in the following chart (based on 10% backloaded contracts):
 | Number of Years | Adjustment Multiplier |
 |:-|:-|
 | 1 | 1.000 |
@@ -53,8 +53,6 @@ A tool will be provided to all league members to assist in calculating Adjusted 
 
 #### Contract Distribution
 No single year on a contract can have less than 10% of the full burden of that contract.
-
-No single year on a contract can have guaranteed money equal to less than 10% of the full guaranteed burden of that contract.
 
 #### Other Contract Terminology
 ***Full Burden.*** The total amount of money on a contract, including guaranteed and non-guaranteed from all years at full value.

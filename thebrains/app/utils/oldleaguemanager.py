@@ -89,7 +89,7 @@ def main(argv = sys.argv[1:]):
 
     league_id = Constants.WHITE_HOUSE_LEAGUE_ID if not args.league_id else args.league_id
     sport = args.sport.lower()
-    players_cache_dir = "/workspaces/Sleeper/backup/cache/" # "/app/data"
+    players_cache_dir = "/app/data" # "/workspaces/Sleeper/backup/cache/" #
 
     updatePlayers.main([players_cache_dir])
 
