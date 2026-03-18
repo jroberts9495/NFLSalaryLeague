@@ -333,7 +333,7 @@ class Contract:
             0.627  # 10 year contract
         ][1 + maxYear - self.start]
 
-    def isValid(self):
+    def isValid(self, player: Player, roster: Roster):
         errors = []
         if self.fifthYearOptionAvailable and not self.rookie:
             errors.append("Fifth Year Option on Non Rookie Deal")
@@ -354,11 +354,21 @@ class Contract:
             prevYear = year
             if contractYear.total() < fullBurden * 0.1:
                 errors.append("{} doesn't share at least 10 percent of full burden".format(year))
+            if year - self.start + player.stats.years_exp < 4:
+                if contractYear.total() < 0.004 * Constants.SALARY_CAP:
+                    errors.append("{} must be a minimum of {}".format(year, Constants.SALARY_CAP * 0.004))
+            elif year - self.start + player.stats.years_exp < 7:
+                if contractYear.total() < 0.005 * Constants.SALARY_CAP:
+                    errors.append("{} must be a minimum of {}".format(year, Constants.SALARY_CAP * 0.005))
+            else:
+                if contractYear.total() < 0.006 * Constants.SALARY_CAP:
+                    errors.append("{} must be a minimum of {}".format(year, Constants.SALARY_CAP * 0.006))
+            # TODO Evaluate roster against cap
         if self.state == ContractType.EXTENSION_OFFER:
             errors.extend(self.isValidExtension())
         if self.state == ContractType.RESTRUCTURE_OFFER:
             errors.extend(self.isValidRestructure())
-        return bool(len(errors)), errors
+        return len(errors) == 0, errors
 
     def isValidExtension(self):
         return NotImplemented
